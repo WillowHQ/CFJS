@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import SignIn from './SignIn'
 import SignOut from './SignOut'
-import { auth } from './Firebase.js'
+import DataWidget from './DataWidget'
+import { auth } from './Firebase'
 
 
 
 import './App.css';
 
 function App() {
-  const [user, setUser] = useState({ loggedIn: false})
+  const [user, setUser] = useState()
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(
       user => {
@@ -25,6 +26,7 @@ function App() {
   return (
     <div className="App">
       <p> this thing on ? </p>
+      <DataWidget/>
       {user ? <SignOut/> : <SignIn/> }
     </div>
   );
