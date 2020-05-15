@@ -13,16 +13,13 @@ function App() {
   async function trackUser(user) {
     const userCollectionRef = db.collection('/users')
     const userRef = userCollectionRef.doc(user.uid)
-    
+    console.log("How often is this getting called")
     userRef.get().then(function(doc) {
       if(doc.exists) {
         const ticker = doc.data().ticker
         const newTicker = ticker + 1
-        console.log("How often is this getting called")
+        console.log("How often is this getting called", ticker, newTicker)
         userRef.update({ticker: newTicker})
-        
-
-
       } else {
         console.log("New User created")
         userRef.set({ticker: 1})
