@@ -8,9 +8,11 @@ const client = createClient({
 
 function DataWidget() {
   const [topic, setTopic] = useState(null)
+
   useEffect(() => {
     client.getEntries()
-    .then((entries) => console.log(entries))
+    .then((entries) => 
+      console.log(entries))
     .catch (function (error){
       console.log(error)
     })
