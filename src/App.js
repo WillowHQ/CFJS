@@ -11,44 +11,24 @@ import './App.css';
 function App() {
   const [user, setUser] = useState()
   async function trackUser(user) {
-    const userRef = db.collection('/users').doc(user.uid)
-    db.runTransaction(function(transaction) {
-      return transaction.get(userRef).then(async function(userDoc) {
-          if (!userDoc.exists) {
-            const response = await db.collection('/users').doc(user.uid).set({
-              ticker: 1,
-            })
-            console.log("New user created", response)
-            return
-          }
-          //check if ticker exists
-          //user.hasField
-  
-          var newTicker = userDoc.data().ticker + 1;
-          if (newTicker <= 1000000) {
-              transaction.update(userRef, { ticker: newTicker });
-              return newTicker;
-          } else {
-              return Promise.reject("Sorry! Ticker is too big.");
-          }
-      });
-  }).then(function(newTicker) {
-      console.log("Ticker increased to ", newTicker);
-  }).catch(function(err) {
-      // This will be an "population is too big" error.
-      console.error(err);
-  });
-
-    // const response  =  await db.collection('/users').doc(user.uid).update({ 
-
-  
-    //   first: "Thom",
-    //   last: "Lovelace",
-    //   uid: user.uid
-    // })
+    const userCollectionRef = db.collection('/users')
+    const userRef = userCollectionRef.doc(user.uid)
     
-    
-    setUser({user})
+    userRef.get().then(function(doc) {
+      if(doc.exists) {
+        const ticker = doc.data().ticker
+        const newTicker = ticker + 1
+        console.log("How often is this getting called")
+        userRef.update({ticker: newTicker})
+        
+
+
+      } else {
+        console.log("New User created")
+        userRef.set({ticker: 1})
+      }
+      setUser({user})
+    })
   }
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(
