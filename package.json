@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "contentful": "^7.14.4",
     "firebase": "^7.14.3",
+    "lodash.get": "^4.4.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
